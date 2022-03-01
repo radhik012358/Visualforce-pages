@@ -1,0 +1,32 @@
+public class mySecondController {
+    Account account;
+    public Account getAccount() {
+        if(account == null) account = new Account();
+        return account;
+    }
+
+    public PageReference save() {
+        // Add the account to the database. 
+        insert account;
+        // Send the user to the detail page for the new account.
+        PageReference acctPage = new ApexPages.StandardController(account).view();
+        acctPage.setRedirect(true);
+        return acctPage;
+    }
+}
+
+Visualforce page
+<apex:page controller="mySecondController" tabStyle="Account">
+    <apex:sectionHeader title="New Account Edit Page" />
+    <apex:form>
+        <apex:pageBlock title="Create a New Account">
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton action="{!save}" value="Save"/>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection title="Account Information">
+                <apex:inputField id="accountName" value="{!account.name}"/>
+                <apex:inputField id="accountSite" value="{!account.site}"/>
+            </apex:pageBlockSection>
+       </apex:pageBlock>
+    </apex:form>
+</apex:page>
