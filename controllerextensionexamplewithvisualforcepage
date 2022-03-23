@@ -1,0 +1,25 @@
+public class myControllerExtensionclass {
+
+    private final Account acct;
+    
+    // The extension constructor initializes the private member
+    // variable acct by using the getRecord method from the standard
+    // controller.
+    public myControllerExtensionclass(ApexPages.StandardController stdController) {
+        this.acct = (Account)stdController.getRecord();
+    }
+
+    public String getGreeting() {
+        return 'Hello ' + acct.name + ' (' + acct.id + ')';
+    }
+}
+
+-- Visualforcepage
+
+<apex:page standardController="Account" extensions="myControllerExtensionclass">
+    {!greeting} <p/>
+    <apex:form>
+        <apex:inputField value="{!account.name}"/> <p/>
+        <apex:commandButton value="Save" action="{!save}"/>
+    </apex:form>
+</apex:page>
