@@ -1,0 +1,30 @@
+public class opportunityList2Con {
+    // ApexPages.StandardSetController must be instantiated
+    // for standard list controllers
+    public ApexPages.StandardSetController setCon {
+        get {
+            if(setCon == null) {
+                setCon = new ApexPages.StandardSetController(Database.getQueryLocator(
+                    [SELECT Name, CloseDate FROM Opportunity]));
+            }
+            return setCon;
+        }
+        set;
+    }
+
+    // Initialize setCon and return a list of records
+    public List<Opportunity> getOpportunities() {
+        return (List<Opportunity>) setCon.getRecords();
+    }
+}
+
+-- Visualforcepage
+
+<apex:page controller="opportunityList2Con">
+    <apex:pageBlock>
+        <apex:pageBlockTable value="{!opportunities}" var="o">
+            <apex:column value="{!o.Name}"/>
+            <apex:column value="{!o.CloseDate}"/>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+</apex:page>
