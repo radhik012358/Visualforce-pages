@@ -1,0 +1,9 @@
+<apex:page standardController="Lead" recordSetVar="leads" tabstyle="lead" sidebar="false">
+  <apex:pageBlock>
+      <apex:pageBlockTable value="{!leads}" var="lea">
+          <apex:column value="{!lea.FirstName}"/>
+          <apex:column value="{!lea.LastName}"/>
+      </apex:pageBlockTable>
+    </apex:pageBlock>
+</apex:page>
+        
