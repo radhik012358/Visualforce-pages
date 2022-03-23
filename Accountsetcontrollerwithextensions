@@ -1,0 +1,21 @@
+<apex:page standardController="Account" recordSetVar="accounts" extensions="MyControllerExt">
+  <apex:pageBlock >
+    <apex:pageBlockTable value="{!accounts}" var="acc">
+      <apex:column value="{!acc.name}"/>
+            </apex:pageBlockTable>
+  </apex:pageBlock>
+</apex:page>
+
+
+-- Controllr extension code
+public with sharing class MyControllerExt {
+    private ApexPages.StandardSetController setcon;
+    public MyControllerExt(ApexPages.StandardSetController setcon) {
+       this.setcon = setcon;
+        
+        Account [] acc =[select Id, Name from Account limit 20];
+        setcon.setSelected(acc);
+         }
+}
+
+    
