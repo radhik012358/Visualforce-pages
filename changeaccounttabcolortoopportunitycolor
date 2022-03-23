@@ -1,0 +1,9 @@
+<apex:page standardController="Account" tabStyle="Opportunity" >
+    <apex:pageBlock title ="Changing Account tab style to Opportunity">
+        <apex:pageBlockSection>
+        <apex:outputText>
+            Account Name:{!Account.Name}
+            </apex:outputText>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+</apex:page>
