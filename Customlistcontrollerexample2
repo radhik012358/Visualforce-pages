@@ -1,0 +1,42 @@
+public with sharing class AccountPagination {
+    private final Account acct;  
+
+    // The constructor passes in the standard controller defined
+    // in the markup below
+    public AccountPagination(ApexPages.StandardSetController controller) {
+        this.acct = (Account)controller.getRecord(); 
+    }    
+    
+    public ApexPages.StandardSetController accountRecords {
+        get {
+            if(accountRecords == null) {
+                accountRecords = new ApexPages.StandardSetController(
+                    Database.getQueryLocator([SELECT Name FROM Account WHERE Id NOT IN 
+                        (SELECT AccountId FROM Opportunity WHERE IsClosed = true)]));
+            }
+            return accountRecords;
+        }
+        private set;
+    }
+    public List<Account> getAccountPagination() {
+         return (List<Account>) accountRecords.getRecords();
+    }  
+}
+
+-- Visualforcepage
+
+<apex:page standardController="Account" recordSetVar="accounts" extensions="AccountPagination">
+    <apex:pageBlock title="Viewing Accounts">
+        <apex:form id="theForm">
+            <apex:pageBlockSection >
+                <apex:dataList value="{!AccountPagination}" var="acct" type="1">
+                    {!acct.name}
+                </apex:dataList>
+            </apex:pageBlockSection>
+            <apex:panelGrid columns="2">
+                <apex:commandLink action="{!previous}">Previous</apex:commandlink>
+                <apex:commandLink action="{!next}">Next</apex:commandlink>
+            </apex:panelGrid>
+        </apex:form> 
+    </apex:pageBlock>
+</apex:page>
